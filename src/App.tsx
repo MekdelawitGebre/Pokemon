@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { Search } from 'lucide-react';
-import { Pokemon, PokemonListResponse } from './types';
-import { PokemonCard } from './components/PokemonCard';
-import { PokemonDetail } from './components/PokemonDetail';
-import { ThemeToggle } from './components/ThemeToggle';
-import { Filters } from './components/Filters';
-import { Pagination } from './components/Pagination';
-import { usePokemonFilters } from './hooks/usePokemonFilters';
+import React, { useState, useEffect } from "react";
+import { Search } from "lucide-react";
+import { Pokemon, PokemonListResponse } from "./types";
+import { PokemonCard } from "./components/PokemonCard";
+import { PokemonDetail } from "./components/PokemonDetail";
+import { ThemeToggle } from "./components/ThemeToggle";
+import { Filters } from "./components/Filters";
+import { Pagination } from "./components/Pagination";
+import { usePokemonFilters } from "./hooks/usePokemonFilters";
 
 function App() {
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
@@ -39,7 +39,7 @@ function App() {
         setError(null);
 
         const response = await fetch(
-          'https://pokeapi.co/api/v2/pokemon?limit=151'
+          "https://pokeapi.co/api/v2/pokemon?limit=151"
         );
         const data: PokemonListResponse = await response.json();
 
@@ -52,7 +52,7 @@ function App() {
 
         setPokemons(pokemonDetails);
       } catch (err) {
-        setError('Failed to fetch Pokemon data. Please try again later.');
+        setError("Failed to fetch Pokemon data. Please try again later.");
       } finally {
         setLoading(false);
       }
@@ -79,8 +79,8 @@ function App() {
           <div className="flex justify-end mb-4">
             <ThemeToggle />
           </div>
-          <h1 className="text-4xl font-bold text-center mb-6">Pokédex</h1>
-          <div className="relative max-w-md mx-auto mb-6">
+          <h1 className="text-4xl font-bold text-center mb-6">Pokémon</h1>
+          <div className="relative  mx-auto mb-6">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500" />
             <input
               type="text"
@@ -91,14 +91,23 @@ function App() {
             />
           </div>
 
-          <Filters
-            selectedTypes={selectedTypes}
-            onTypeChange={toggleType}
-            sortOption={sortOption}
-            sortDirection={sortDirection}
-            onSortChange={setSortOption}
-            onDirectionChange={toggleSortDirection}
-          />
+          {/* Flex container for filters and sorting */}
+          <div className="flex flex-col lg:flex-row justify-between items-left mb-6">
+            <div className="lg:w-1/2 mb-4 lg:mb-0">
+              <Filters
+                selectedTypes={selectedTypes}
+                onTypeChange={toggleType}
+                sortOption={sortOption}
+                sortDirection={sortDirection}
+                onSortChange={setSortOption}
+                onDirectionChange={toggleSortDirection}
+              />
+            </div>
+            {/* Placeholder for sorting component */}
+            <div className="lg:w-1/2 mb-4 lg:mb-0">
+           
+            </div>
+          </div>
         </header>
 
         {loading ? (

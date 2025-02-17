@@ -1,26 +1,27 @@
-import React from 'react';
-import { Filter, ArrowUpDown, ChevronDown } from 'lucide-react';
-import { SortOption, SortDirection } from '../types';
+import React from "react";
+import { Filter, ArrowUpDown, ChevronDown } from "lucide-react";
+import { SortOption, SortDirection } from "../types";
 
+// Pokémon types and corresponding colors 
 const POKEMON_TYPES = [
-  { name: 'normal', color: 'bg-gray-400' },
-  { name: 'fire', color: 'bg-red-500' },
-  { name: 'water', color: 'bg-blue-500' },
-  { name: 'electric', color: 'bg-yellow-400' },
-  { name: 'grass', color: 'bg-green-500' },
-  { name: 'ice', color: 'bg-cyan-300' },
-  { name: 'fighting', color: 'bg-red-700' },
-  { name: 'poison', color: 'bg-purple-500' },
-  { name: 'ground', color: 'bg-yellow-600' },
-  { name: 'flying', color: 'bg-indigo-300' },
-  { name: 'psychic', color: 'bg-pink-500' },
-  { name: 'bug', color: 'bg-lime-500' },
-  { name: 'rock', color: 'bg-yellow-800' },
-  { name: 'ghost', color: 'bg-purple-700' },
-  { name: 'dragon', color: 'bg-indigo-600' },
-  { name: 'dark', color: 'bg-gray-700' },
-  { name: 'steel', color: 'bg-gray-500' },
-  { name: 'fairy', color: 'bg-pink-300' },
+  { name: "normal", color: "bg-gray-400" },
+  { name: "fire", color: "bg-red-500" },
+  { name: "water", color: "bg-blue-500" },
+  { name: "electric", color: "bg-yellow-400" },
+  { name: "grass", color: "bg-green-500" },
+  { name: "ice", color: "bg-cyan-300" },
+  { name: "fighting", color: "bg-red-700" },
+  { name: "poison", color: "bg-purple-500" },
+  { name: "ground", color: "bg-yellow-600" },
+  { name: "flying", color: "bg-indigo-300" },
+  { name: "psychic", color: "bg-pink-500" },
+  { name: "bug", color: "bg-lime-500" },
+  { name: "rock", color: "bg-yellow-800" },
+  { name: "ghost", color: "bg-purple-700" },
+  { name: "dragon", color: "bg-indigo-600" },
+  { name: "dark", color: "bg-gray-700" },
+  { name: "steel", color: "bg-gray-500" },
+  { name: "fairy", color: "bg-pink-00" }, 
 ];
 
 interface FiltersProps {
@@ -43,6 +44,7 @@ export function Filters({
   const [isOpen, setIsOpen] = React.useState(false);
   const dropdownRef = React.useRef<HTMLDivElement>(null);
 
+  // Close dropdown if user clicks outside of it
   React.useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
@@ -53,13 +55,14 @@ export function Filters({
       }
     }
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   return (
-    <div className="mb-6 space-y-4">
-      <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-md">
+    <div className="mb- space-y-3">
+      {/* Filter Section */}
+      <div className="bg-white dark:bg-gray-800 rounded-lg p-3 shadow-md">
         <div className="flex flex-col sm:flex-row sm:items-center gap-4">
           <div className="flex items-center gap-2">
             <Filter className="w-5 h-5" />
@@ -68,6 +71,7 @@ export function Filters({
             </span>
           </div>
 
+          {/* Type selection dropdown */}
           <div className="relative" ref={dropdownRef}>
             <button
               onClick={() => setIsOpen(!isOpen)}
@@ -75,16 +79,17 @@ export function Filters({
             >
               <span className="text-gray-700 dark:text-gray-200">
                 {selectedTypes.length === 0
-                  ? 'Select types...'
+                  ? "Select types..."
                   : `${selectedTypes.length} selected`}
               </span>
               <ChevronDown
                 className={`w-4 h-4 transition-transform ${
-                  isOpen ? 'rotate-180' : ''
+                  isOpen ? "rotate-180" : ""
                 }`}
               />
             </button>
 
+            {/* Dropdown menu with type filters */}
             {isOpen && (
               <div className="absolute z-50 w-full mt-2 py-2 bg-white dark:bg-gray-800 rounded-lg shadow-lg max-h-60 overflow-y-auto">
                 {POKEMON_TYPES.map((type) => (
@@ -109,6 +114,7 @@ export function Filters({
             )}
           </div>
 
+          {/* Display selected types */}
           {selectedTypes.length > 0 && (
             <div className="flex flex-wrap gap-2">
               {selectedTypes.map((type) => {
@@ -133,6 +139,7 @@ export function Filters({
         </div>
       </div>
 
+      {/* Sorting Section */}
       <div className="flex items-center gap-4 bg-white dark:bg-gray-800 rounded-lg p-4 shadow-md">
         <div className="flex items-center gap-2">
           <ArrowUpDown className="w-5 h-5" />
@@ -152,7 +159,7 @@ export function Filters({
           onClick={onDirectionChange}
           className="px-3 py-1 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
         >
-          {sortDirection === 'asc' ? '↑ Ascending' : '↓ Descending'}
+          {sortDirection === "asc" ? "↑ Ascending" : "↓ Descending"}
         </button>
       </div>
     </div>
